@@ -1,26 +1,20 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react'
+import logo from './logo.svg'
+import './App.css'
 
 function App() {
+  const [todos, setTodos] = useState<string[]>(['test'])
+
+  const addTodo = () => {}
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {todos.map((todo, index) => (
+        <p>{todo}</p>
+      ))}
+      <button onClick={addTodo}>追加</button>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
