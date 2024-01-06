@@ -1,6 +1,5 @@
 import React, { useState, ChangeEvent } from 'react'
 import { TodoItem } from './components/TodoItem'
-import './App.css'
 
 function App() {
   const [todos, setTodos] = useState<string[]>([])
