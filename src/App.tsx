@@ -1,6 +1,7 @@
 import React, { useState, ChangeEvent } from 'react'
 import logo from './logo.svg'
 import './App.css'
+import { TodoItem } from './components/TodoItem'
 
 function App() {
   const [todos, setTodos] = useState<string[]>([])
@@ -14,9 +15,7 @@ function App() {
   }
 
   const onClickDelete = (index: number) => {
-    const newTodos = [...todos]
-    newTodos.splice(index, 1)
-    setTodos(newTodos)
+    setTodos(todos.filter((_, i) => i !== index))
   }
 
   const onChangeText = (e: ChangeEvent<HTMLInputElement>) => {
@@ -26,10 +25,11 @@ function App() {
   return (
     <div className="App">
       {todos.map((todo, index) => (
-        <div>
-          <p>{todo}</p>
-          <button onClick={() => onClickDelete(index)}>削除</button>
-        </div>
+        <TodoItem
+          key={index}
+          todo={todo}
+          onDelete={() => onClickDelete(index)}
+        />
       ))}
       <input type="text" value={text} onChange={onChangeText} />
       <button onClick={onClickAdd}>追加</button>
