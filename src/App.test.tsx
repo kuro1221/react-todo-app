@@ -20,3 +20,5 @@ describe('Todo Add Test', () => {
     expect(screen.getByText('New Todo')).toBeInTheDocument()
   })
 })
+
+test('test', function () {})
