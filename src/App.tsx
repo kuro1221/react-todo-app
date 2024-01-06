@@ -1,5 +1,6 @@
 import React, { useState, ChangeEvent } from 'react'
 import { TodoItem } from './components/TodoItem'
+import './App.css'
 
 function App() {
   const [todos, setTodos] = useState<string[]>([])
@@ -19,7 +20,7 @@ function App() {
   }
 
   return (
-    <div className="App">
+    <div className="App p-6">
       {todos.map((todo, index) => (
         <TodoItem
           key={index}
@@ -27,8 +28,20 @@ function App() {
           onDelete={() => onClickDelete(index)}
         />
       ))}
-      <input type="text" value={text} onChange={onChangeText} />
-      <button onClick={onClickAdd}>追加</button>
+      <div className="flex mt-4">
+        <input
+          type="text"
+          value={text}
+          onChange={onChangeText}
+          className="border-2 border-gray-200 rounded p-2 mr-2 flex-grow"
+        />
+        <button
+          onClick={onClickAdd}
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        >
+          追加
+        </button>
+      </div>
     </div>
   )
 }
