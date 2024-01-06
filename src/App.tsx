@@ -1,6 +1,4 @@
 import React, { useState, ChangeEvent } from 'react'
-import logo from './logo.svg'
-import './App.css'
 import { TodoItem } from './components/TodoItem'
 
 function App() {
@@ -8,9 +6,7 @@ function App() {
   const [text, setText] = useState<string>('')
 
   const onClickAdd = () => {
-    const newTodos = [...todos]
-    newTodos.push(text)
-    setTodos(newTodos)
+    setTodos([...todos, text])
     setText('')
   }
 
