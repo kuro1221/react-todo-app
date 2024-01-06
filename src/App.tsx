@@ -1,5 +1,5 @@
 import React, { useState, ChangeEvent } from 'react'
-import logo from './logo.svg'
+import { TodoItem } from './components/TodoItem'
 import './App.css'
 
 function App() {
@@ -7,16 +7,12 @@ function App() {
   const [text, setText] = useState<string>('')
 
   const onClickAdd = () => {
-    const newTodos = [...todos]
-    newTodos.push(text)
-    setTodos(newTodos)
+    setTodos([...todos, text])
     setText('')
   }
 
   const onClickDelete = (index: number) => {
-    const newTodos = [...todos]
-    newTodos.splice(index, 1)
-    setTodos(newTodos)
+    setTodos(todos.filter((_, i) => i !== index))
   }
 
   const onChangeText = (e: ChangeEvent<HTMLInputElement>) => {
@@ -24,15 +20,28 @@ function App() {
   }
 
   return (
-    <div className="App">
+    <div className="App p-6">
       {todos.map((todo, index) => (
-        <div>
-          <p>{todo}</p>
-          <button onClick={() => onClickDelete(index)}>削除</button>
-        </div>
+        <TodoItem
+          key={index}
+          todo={todo}
+          onDelete={() => onClickDelete(index)}
+        />
       ))}
-      <input type="text" value={text} onChange={onChangeText} />
-      <button onClick={onClickAdd}>追加</button>
+      <div className="flex mt-4">
+        <input
+          type="text"
+          value={text}
+          onChange={onChangeText}
+          className="border-2 border-gray-200 rounded p-2 mr-2 flex-grow"
+        />
+        <button
+          onClick={onClickAdd}
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        >
+          追加
+        </button>
+      </div>
     </div>
   )
 }
