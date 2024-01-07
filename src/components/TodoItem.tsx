@@ -16,7 +16,11 @@ export const TodoItem: FC<{
         >
           完了
         </button>
-        <button onClick={onDelete} className="bg-red-500 hover:bg-red-700 btn">
+        <button
+          onClick={onDelete}
+          className="bg-red-500 hover:bg-red-700 btn"
+          data-testid={`delete-button-${todo.id}`}
+        >
           削除
         </button>
       </div>

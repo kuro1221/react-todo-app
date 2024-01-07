@@ -12,6 +12,5 @@ export const fetchActiveTodos = (): Promise<Todo[]> => {
 
 export const deleteTodo = (id: number): Promise<void> => {
   todos = todos.filter((todo) => todo.id !== id)
-  console.log(todos)
   return Promise.resolve()
 }

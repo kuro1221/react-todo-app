@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, screen, fireEvent } from '@testing-library/react'
+import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import App from './App'
 
 describe('Todo Add Test', () => {
@@ -18,5 +18,21 @@ describe('Todo Add Test', () => {
 
     // 新しいTodoがリストに表示されていることを確認
     expect(screen.getByText('New Todo')).toBeInTheDocument()
+  })
+})
+
+describe('Todo Delete Test', () => {
+  test('delete todo item when delete button is clicked', async () => {
+    render(<App />)
+
+    const deleteButton = await waitFor(() =>
+      screen.getByTestId(`delete-button-1`)
+    )
+
+    fireEvent.click(deleteButton)
+
+    await waitFor(() => {
+      expect(screen.queryByText(`delete-button-1`)).toBeNull()
+    })
   })
 })
