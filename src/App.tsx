@@ -36,12 +36,20 @@ function App() {
   }
 
   const onChangeText = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.value === '') {
+    const inputValue = e.target.value
+    setText(inputValue)
+
+    if (inputValue === '') {
       setInputTextError('Todoを入力してください')
-    } else {
-      setInputTextError('')
+      return
     }
-    setText(e.target.value)
+
+    if (inputValue.length > 20) {
+      setInputTextError('Todoは20文字以内で入力してください')
+      return
+    }
+
+    setInputTextError('')
   }
 
   const onClickComplete = async (id: number) => {
@@ -75,7 +83,10 @@ function App() {
         )}
         <button
           onClick={() => onClickAdd(text)}
-          className="bg-blue-500 hover:bg-blue-700 btn"
+          className={`bg-blue-500 hover:bg-blue-700 btn ${
+            inputTextError ? 'opacity-50 cursor-not-allowed' : ''
+          }`}
+          disabled={inputTextError ? true : false}
         >
           追加
         </button>

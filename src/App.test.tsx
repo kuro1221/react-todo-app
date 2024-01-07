@@ -34,3 +34,28 @@ describe('Todo Delete Test', () => {
     })
   })
 })
+describe('onChangeText Test', () => {
+  test('sets the input text error when empty input is provided', () => {
+    render(<App />)
+
+    const input = screen.getByRole('textbox')
+    fireEvent.change(input, { target: { value: '一時的に入力' } })
+    fireEvent.change(input, { target: { value: '' } })
+
+    expect(screen.getByText('Todoを入力してください')).toBeInTheDocument()
+  })
+
+  test('sets the input text error when input exceeds 20 characters', () => {
+    render(<App />)
+
+    const input = screen.getByRole('textbox')
+
+    fireEvent.change(input, {
+      target: { value: 'This is a very long todo item' },
+    })
+
+    expect(
+      screen.getByText('Todoは20文字以内で入力してください')
+    ).toBeInTheDocument()
+  })
+})
