@@ -16,7 +16,7 @@ function App() {
     fetchActiveTodos().then((data) => setTodos(data))
   }, [])
 
-  const onClickAdd = () => {
+  const onClickAdd = (text: string) => {
     try {
       addTodo(text)
       setText('')
@@ -65,7 +65,7 @@ function App() {
           className="border-2 border-gray-200 rounded p-2 mr-2 flex-grow"
         />
         <button
-          onClick={onClickAdd}
+          onClick={() => onClickAdd(text)}
           className="bg-blue-500 hover:bg-blue-700 btn"
         >
           追加
