@@ -1,7 +1,7 @@
 import { useState, useEffect, ChangeEvent } from 'react'
 import { TodoItem } from './components/TodoItem'
 import { Todo } from './models/Todo'
-import { fetchActiveTodos, deleteTodo } from './api/mockApi'
+import { fetchActiveTodos, deleteTodo, completeTodo } from './api/mockApi'
 
 function App() {
   const [todos, setTodos] = useState<Todo[]>([])
@@ -21,7 +21,7 @@ function App() {
       await deleteTodo(id)
       await fetchActiveTodos().then((data) => setTodos(data))
     } catch (error) {
-      console.log('エラー発生')
+      console.log('Todo削除時エラー発生')
     }
   }
 
@@ -29,8 +29,13 @@ function App() {
     setText(e.target.value)
   }
 
-  const onComplete = (index: number) => {
-    setTodos(todos.filter((_, i) => i !== index))
+  const onClickComplete = async (id: number) => {
+    try {
+      await completeTodo(id)
+      await fetchActiveTodos().then((data) => setTodos(data))
+    } catch (error) {
+      console.log('Todo完了時エラー発生')
+    }
   }
 
   return (
@@ -39,7 +44,7 @@ function App() {
         <TodoItem
           key={index}
           todo={todo}
-          onComplete={() => onComplete(index)}
+          onComplete={() => onClickComplete(index)}
           onDelete={() => onClickDelete(todo.id)}
         />
       ))}
