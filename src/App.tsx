@@ -1,7 +1,12 @@
 import { useState, useEffect, ChangeEvent } from 'react'
 import { TodoItem } from './components/TodoItem'
 import { Todo } from './models/Todo'
-import { fetchActiveTodos, deleteTodo, completeTodo } from './api/mockApi'
+import {
+  fetchActiveTodos,
+  addTodo,
+  deleteTodo,
+  completeTodo,
+} from './api/mockApi'
 
 function App() {
   const [todos, setTodos] = useState<Todo[]>([])
@@ -12,8 +17,12 @@ function App() {
   }, [])
 
   const onClickAdd = () => {
-    setTodos([...todos, new Todo(1, text, false, false)])
-    setText('')
+    try {
+      addTodo(text)
+      setText('')
+    } catch (error) {
+      console.log('Todo追加時エラー発生')
+    }
   }
 
   const onClickDelete = async (id: number) => {

@@ -11,6 +11,14 @@ export const fetchActiveTodos = (): Promise<Todo[]> => {
   return Promise.resolve(todos)
 }
 
+export const addTodo = (text: string): Promise<void> => {
+  const id = todos.length + 1
+  const todo = new Todo(id, text, false, false)
+  todos.push(todo)
+
+  return Promise.resolve()
+}
+
 export const deleteTodo = (id: number): Promise<void> => {
   todos = todos.map((todo) => {
     if (todo.id === id) todo.delete_flg = true

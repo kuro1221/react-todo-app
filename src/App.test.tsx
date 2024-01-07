@@ -3,7 +3,7 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import App from './App'
 
 describe('Todo Add Test', () => {
-  test('adds a new todo item when add button is clicked', () => {
+  test('adds a new todo item when add button is clicked', async () => {
     render(<App />)
 
     // テキストボックスと追加ボタンを取得
@@ -17,7 +17,9 @@ describe('Todo Add Test', () => {
     fireEvent.click(addButton)
 
     // 新しいTodoがリストに表示されていることを確認
-    expect(screen.getByText('New Todo')).toBeInTheDocument()
+    await waitFor(() => {
+      expect(screen.getByText('New Todo')).toBeInTheDocument()
+    })
   })
 })
 
