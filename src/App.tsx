@@ -1,12 +1,18 @@
-import React, { useState, ChangeEvent } from 'react'
+import { useState, useEffect, ChangeEvent } from 'react'
 import { TodoItem } from './components/TodoItem'
+import { Todo } from './models/Todo'
+import { fetchTodos } from './api/mockApi'
 
 function App() {
-  const [todos, setTodos] = useState<string[]>([])
+  const [todos, setTodos] = useState<Todo[]>([])
   const [text, setText] = useState<string>('')
 
+  useEffect(() => {
+    fetchTodos().then((data) => setTodos(data))
+  }, [])
+
   const onClickAdd = () => {
-    setTodos([...todos, text])
+    setTodos([...todos, new Todo(text, false, false)])
     setText('')
   }
 
@@ -18,12 +24,17 @@ function App() {
     setText(e.target.value)
   }
 
+  const onComplete = (index: number) => {
+    setTodos(todos.filter((_, i) => i !== index))
+  }
+
   return (
     <div className="App p-6">
       {todos.map((todo, index) => (
         <TodoItem
           key={index}
-          todo={todo}
+          todo={todo.title}
+          onComplete={() => onComplete(index)}
           onDelete={() => onClickDelete(index)}
         />
       ))}
