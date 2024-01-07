@@ -11,6 +11,7 @@ import {
 function App() {
   const [todos, setTodos] = useState<Todo[]>([])
   const [text, setText] = useState<string>('')
+  const [inputTextError, setInputTextError] = useState<string>('')
 
   useEffect(() => {
     fetchActiveTodos().then((data) => setTodos(data))
@@ -35,6 +36,11 @@ function App() {
   }
 
   const onChangeText = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.value === '') {
+      setInputTextError('Todoを入力してください')
+    } else {
+      setInputTextError('')
+    }
     setText(e.target.value)
   }
 
@@ -64,6 +70,9 @@ function App() {
           onChange={onChangeText}
           className="border-2 border-gray-200 rounded p-2 mr-2 flex-grow"
         />
+        {inputTextError && (
+          <p className="text-red-500 text-sm">{inputTextError}</p>
+        )}
         <button
           onClick={() => onClickAdd(text)}
           className="bg-blue-500 hover:bg-blue-700 btn"
