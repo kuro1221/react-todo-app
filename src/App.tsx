@@ -1,23 +1,28 @@
 import { useState, useEffect, ChangeEvent } from 'react'
 import { TodoItem } from './components/TodoItem'
 import { Todo } from './models/Todo'
-import { fetchTodos } from './api/mockApi'
+import { fetchActiveTodos, deleteTodo } from './api/mockApi'
 
 function App() {
   const [todos, setTodos] = useState<Todo[]>([])
   const [text, setText] = useState<string>('')
 
   useEffect(() => {
-    fetchTodos().then((data) => setTodos(data))
+    fetchActiveTodos().then((data) => setTodos(data))
   }, [])
 
   const onClickAdd = () => {
-    setTodos([...todos, new Todo(text, false, false)])
+    setTodos([...todos, new Todo(1, text, false, false)])
     setText('')
   }
 
-  const onClickDelete = (index: number) => {
-    setTodos(todos.filter((_, i) => i !== index))
+  const onClickDelete = async (id: number) => {
+    try {
+      await deleteTodo(id)
+      await fetchActiveTodos().then((data) => setTodos(data))
+    } catch (error) {
+      console.log('エラー発生')
+    }
   }
 
   const onChangeText = (e: ChangeEvent<HTMLInputElement>) => {
@@ -33,9 +38,9 @@ function App() {
       {todos.map((todo, index) => (
         <TodoItem
           key={index}
-          todo={todo.title}
+          todo={todo}
           onComplete={() => onComplete(index)}
-          onDelete={() => onClickDelete(index)}
+          onDelete={() => onClickDelete(todo.id)}
         />
       ))}
       <div className="flex mt-4">
