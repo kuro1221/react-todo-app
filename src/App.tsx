@@ -3,6 +3,7 @@ import { TodoItem } from './components/TodoItem'
 import { Todo } from './models/Todo'
 import SearchAppBar from './components/SearchAppBar'
 import TextField from '@mui/material/TextField'
+import { Button } from '@mui/material'
 
 import {
   fetchActiveTodos,
@@ -15,10 +16,26 @@ function App() {
   const [todos, setTodos] = useState<Todo[]>([])
   const [text, setText] = useState<string>('')
   const [inputTextError, setInputTextError] = useState<string>('')
+  const [searchText, setSearchText] = useState<string>('')
+  const [initialTodos, setInitialTodos] = useState<Todo[]>([])
 
   useEffect(() => {
-    fetchActiveTodos().then((data) => setTodos(data))
+    fetchActiveTodos().then((data) => {
+      setTodos(data)
+      setInitialTodos(data)
+    })
   }, [])
+
+  useEffect(() => {
+    const filteredTodos = initialTodos.filter((todo) =>
+      todo.title.includes(searchText)
+    )
+    setTodos(filteredTodos)
+  }, [searchText])
+
+  const onChangeSearchText = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearchText(e.target.value)
+  }
 
   const onClickAdd = (text: string) => {
     try {
@@ -70,7 +87,10 @@ function App() {
 
   return (
     <>
-      <SearchAppBar />
+      <SearchAppBar
+        searchText={searchText}
+        onChangeSearchText={onChangeSearchText}
+      />
       <div className="flex justify-center">
         <div className="App w-100 mb-8">
           {todos.map((todo, index) => (
@@ -92,15 +112,9 @@ function App() {
               onChange={onChangeText}
               value={text}
             />
-            <button
-              onClick={() => onClickAdd(text)}
-              className={`bg-blue-500 hover:bg-blue-700 btn ${
-                inputTextError ? 'opacity-50 cursor-not-allowed' : ''
-              }`}
-              disabled={inputTextError ? true : false}
-            >
+            <Button onClick={() => onClickAdd(text)} variant="outlined">
               追加
-            </button>
+            </Button>
           </div>
         </div>
       </div>
