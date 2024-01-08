@@ -2,6 +2,7 @@ import { useState, useEffect, ChangeEvent } from 'react'
 import { TodoItem } from './components/TodoItem'
 import { Todo } from './models/Todo'
 import SearchAppBar from './components/SearchAppBar'
+import TextField from '@mui/material/TextField'
 
 import {
   fetchActiveTodos,
@@ -21,6 +22,10 @@ function App() {
 
   const onClickAdd = (text: string) => {
     try {
+      if (text === '') {
+        setInputTextError('Todoを入力してください')
+        return
+      }
       addTodo(text)
       setText('')
     } catch (error) {
@@ -77,15 +82,16 @@ function App() {
             />
           ))}
           <div className="flex mt-4">
-            <input
-              type="text"
-              value={text}
+            <TextField
+              error={inputTextError ? true : false}
+              id="filled-error-helper-text"
+              label="New Todo"
+              defaultValue="Hello World"
+              helperText={inputTextError}
+              variant="filled"
               onChange={onChangeText}
-              className="border-2 border-gray-200 rounded p-2 mr-2 flex-grow"
+              value={text}
             />
-            {inputTextError && (
-              <p className="text-red-500 text-sm">{inputTextError}</p>
-            )}
             <button
               onClick={() => onClickAdd(text)}
               className={`bg-blue-500 hover:bg-blue-700 btn ${
