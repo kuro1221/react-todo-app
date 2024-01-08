@@ -1,5 +1,7 @@
 import React, { FC } from 'react'
 import { Todo } from '../models/Todo'
+import IconButton from '@mui/material/IconButton'
+import DeleteIcon from '@mui/icons-material/Delete'
 
 export const TodoItem: FC<{
   todo: Todo
@@ -16,13 +18,13 @@ export const TodoItem: FC<{
         >
           完了
         </button>
-        <button
+        <IconButton
+          aria-label="delete"
           onClick={onDelete}
-          className="bg-red-500 hover:bg-red-700 btn"
           data-testid={`delete-button-${todo.id}`}
         >
-          削除
-        </button>
+          <DeleteIcon />
+        </IconButton>
       </div>
     </div>
   )
