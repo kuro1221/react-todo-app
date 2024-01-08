@@ -109,8 +109,8 @@ function App() {
               key={index}
               todo={todo}
               onComplete={() => onClickComplete(todo.id)}
-              onDelete={() => onClickDelete}
-              onAddTagToTodo={(tag: string) => onAddTagToTodo(todo.id, tag)}
+              onDelete={() => onClickDelete(todo.id)}
+              onAddTagToTodo={(id, tag) => onAddTagToTodo(id, tag)}
             />
           ))}
           <div className="flex mt-4">

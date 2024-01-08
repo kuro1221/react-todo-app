@@ -11,7 +11,7 @@ export const TodoItem: FC<{
   todo: Todo
   onDelete: () => void
   onComplete: () => void
-  onAddTagToTodo: (tag: string) => void
+  onAddTagToTodo: (id: number, tag: string) => void
 }> = ({ todo, onComplete, onDelete, onAddTagToTodo }) => {
   return (
     <div className="flex flex-col bg-white shadow-md rounded px-4 py-2 my-2">
@@ -31,7 +31,7 @@ export const TodoItem: FC<{
             ))}
             <TagSelection
               todoId={todo.id}
-              onAddTagToTodo={(tag: string) => onAddTagToTodo}
+              onAddTagToTodo={(id, tag) => onAddTagToTodo(id, tag)}
             />
           </div>
         </div>

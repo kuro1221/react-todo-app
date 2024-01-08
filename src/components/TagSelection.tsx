@@ -5,10 +5,11 @@ import TextField from '@mui/material/TextField'
 import Dialog from '@mui/material/Dialog'
 import Box from '@mui/material/Box'
 import { Chip } from '@mui/material'
+import { on } from 'events'
 
 interface TagSelectionProps {
   todoId: number
-  onAddTagToTodo: (tag: string) => void
+  onAddTagToTodo: (id: number, tag: string) => void
 }
 
 export const TagSelection: FC<TagSelectionProps> = ({
@@ -44,7 +45,10 @@ export const TagSelection: FC<TagSelectionProps> = ({
             id="tags-filled"
             options={tags}
             freeSolo
-            onChange={(tags) => onAddTagToTodo}
+            onChange={(event, value) => {
+              console.log(value[value.length - 1])
+              onAddTagToTodo(todoId, value[value.length - 1])
+            }}
             renderTags={(value: readonly string[], getTagProps) =>
               value.map((option: string, index: number) => (
                 <Chip
