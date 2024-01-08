@@ -3,6 +3,7 @@ export class Todo {
     public id: number,
     public title: string,
     public complete_flg: boolean,
-    public delete_flg: boolean
+    public delete_flg: boolean,
+    public tags: string[]
   ) {}
 }
