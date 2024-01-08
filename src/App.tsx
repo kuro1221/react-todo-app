@@ -1,6 +1,10 @@
 import { useState, useEffect, ChangeEvent } from 'react'
 import { TodoItem } from './components/TodoItem'
 import { Todo } from './models/Todo'
+import SearchAppBar from './components/SearchAppBar'
+import TextField from '@mui/material/TextField'
+import { Button } from '@mui/material'
+
 import {
   fetchActiveTodos,
   addTodo,
@@ -12,13 +16,33 @@ function App() {
   const [todos, setTodos] = useState<Todo[]>([])
   const [text, setText] = useState<string>('')
   const [inputTextError, setInputTextError] = useState<string>('')
+  const [searchText, setSearchText] = useState<string>('')
+  const [initialTodos, setInitialTodos] = useState<Todo[]>([])
 
   useEffect(() => {
-    fetchActiveTodos().then((data) => setTodos(data))
+    fetchActiveTodos().then((data) => {
+      setTodos(data)
+      setInitialTodos(data)
+    })
   }, [])
+
+  useEffect(() => {
+    const filteredTodos = initialTodos.filter((todo) =>
+      todo.title.includes(searchText)
+    )
+    setTodos(filteredTodos)
+  }, [searchText])
+
+  const onChangeSearchText = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearchText(e.target.value)
+  }
 
   const onClickAdd = (text: string) => {
     try {
+      if (text === '') {
+        setInputTextError('Todoを入力してください')
+        return
+      }
       addTodo(text)
       setText('')
     } catch (error) {
@@ -62,36 +86,39 @@ function App() {
   }
 
   return (
-    <div className="App p-6">
-      {todos.map((todo, index) => (
-        <TodoItem
-          key={index}
-          todo={todo}
-          onComplete={() => onClickComplete(index)}
-          onDelete={() => onClickDelete(todo.id)}
-        />
-      ))}
-      <div className="flex mt-4">
-        <input
-          type="text"
-          value={text}
-          onChange={onChangeText}
-          className="border-2 border-gray-200 rounded p-2 mr-2 flex-grow"
-        />
-        {inputTextError && (
-          <p className="text-red-500 text-sm">{inputTextError}</p>
-        )}
-        <button
-          onClick={() => onClickAdd(text)}
-          className={`bg-blue-500 hover:bg-blue-700 btn ${
-            inputTextError ? 'opacity-50 cursor-not-allowed' : ''
-          }`}
-          disabled={inputTextError ? true : false}
-        >
-          追加
-        </button>
+    <>
+      <SearchAppBar
+        searchText={searchText}
+        onChangeSearchText={onChangeSearchText}
+      />
+      <div className="flex justify-center">
+        <div className="App w-100 mb-8">
+          {todos.map((todo, index) => (
+            <TodoItem
+              key={index}
+              todo={todo}
+              onComplete={() => onClickComplete(index)}
+              onDelete={() => onClickDelete(todo.id)}
+            />
+          ))}
+          <div className="flex mt-4">
+            <TextField
+              error={inputTextError ? true : false}
+              id="filled-error-helper-text"
+              label="New Todo"
+              defaultValue="Hello World"
+              helperText={inputTextError}
+              variant="filled"
+              onChange={onChangeText}
+              value={text}
+            />
+            <Button onClick={() => onClickAdd(text)} variant="outlined">
+              追加
+            </Button>
+          </div>
+        </div>
       </div>
-    </div>
+    </>
   )
 }
 
