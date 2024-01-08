@@ -97,7 +97,7 @@ function App() {
             <TodoItem
               key={index}
               todo={todo}
-              onComplete={() => onClickComplete(index)}
+              onComplete={() => onClickComplete(todo.id)}
               onDelete={() => onClickDelete(todo.id)}
             />
           ))}
