@@ -10,7 +10,7 @@ import {
   addTodo,
   deleteTodo,
   completeTodo,
-  addTagToTodo,
+  changeTagToTodo,
 } from './api/mockApi'
 
 function App() {
@@ -60,10 +60,10 @@ function App() {
     }
   }
 
-  const onAddTagToTodo = async (id: number, tag: string) => {
+  const onchangeTagToTodo = async (id: number, tag: string) => {
     try {
-      console.log('onAddTagToTodo')
-      await addTagToTodo(id, tag)
+      console.log('onchangeTagToTodo')
+      await changeTagToTodo(id, tag)
       await fetchActiveTodos().then((data) => setTodos(data))
     } catch (error) {
       console.log('Todoにタグ追加時エラー発生')
@@ -109,8 +109,8 @@ function App() {
               key={index}
               todo={todo}
               onComplete={() => onClickComplete(todo.id)}
-              onDelete={() => onClickDelete}
-              onAddTagToTodo={(tag: string) => onAddTagToTodo(todo.id, tag)}
+              onDelete={() => onClickDelete(todo.id)}
+              onchangeTagToTodo={(id, tag) => onchangeTagToTodo(id, tag)}
             />
           ))}
           <div className="flex mt-4">

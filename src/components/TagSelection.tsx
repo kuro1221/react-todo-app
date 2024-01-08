@@ -5,15 +5,16 @@ import TextField from '@mui/material/TextField'
 import Dialog from '@mui/material/Dialog'
 import Box from '@mui/material/Box'
 import { Chip } from '@mui/material'
+import { on } from 'events'
 
 interface TagSelectionProps {
   todoId: number
-  onAddTagToTodo: (tag: string) => void
+  onchangeTagToTodo: (id: number, tag: string) => void
 }
 
 export const TagSelection: FC<TagSelectionProps> = ({
   todoId,
-  onAddTagToTodo,
+  onchangeTagToTodo,
 }) => {
   const [open, setOpen] = useState(false)
   const [tags, setTags] = useState(['筋トレ', '勉強', '読書', '朝のルーティン'])
@@ -40,11 +41,13 @@ export const TagSelection: FC<TagSelectionProps> = ({
         <Box p={3}>
           {' '}
           <Autocomplete
-            multiple
             id="tags-filled"
             options={tags}
             freeSolo
-            onChange={(tags) => onAddTagToTodo}
+            onChange={(event, value) => {
+              console.log(value)
+              if (value) onchangeTagToTodo(todoId, value)
+            }}
             renderTags={(value: readonly string[], getTagProps) =>
               value.map((option: string, index: number) => (
                 <Chip

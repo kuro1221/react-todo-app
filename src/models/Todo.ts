@@ -4,6 +4,6 @@ export class Todo {
     public title: string,
     public complete_flg: boolean,
     public delete_flg: boolean,
-    public tags: string[]
+    public tag: string
   ) {}
 }

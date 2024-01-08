@@ -1,9 +1,9 @@
 import { Todo } from '../models/Todo'
 
 let todos = [
-  new Todo(1, 'Todo 1', false, false, ['筋トレ', '読書']),
-  new Todo(2, 'Todo 2', false, false, []),
-  new Todo(3, 'Todo 3', false, false, []),
+  new Todo(1, 'Todo 1', false, false, '読書'),
+  new Todo(2, 'Todo 2', false, false, ''),
+  new Todo(3, 'Todo 3', false, false, ''),
 ]
 
 export const fetchActiveTodos = (): Promise<Todo[]> => {
@@ -13,7 +13,7 @@ export const fetchActiveTodos = (): Promise<Todo[]> => {
 
 export const addTodo = (text: string): Promise<void> => {
   const id = todos.length + 1
-  const todo = new Todo(id, text, false, false, [])
+  const todo = new Todo(id, text, false, false, '')
   todos.push(todo)
 
   return Promise.resolve()
@@ -36,9 +36,9 @@ export const completeTodo = (id: number): Promise<void> => {
   return Promise.resolve()
 }
 
-export const addTagToTodo = (id: number, tag: string): Promise<void> => {
+export const changeTagToTodo = (id: number, tag: string): Promise<void> => {
   todos = todos.map((todo) => {
-    if (todo.id === id) todo.tags.push(tag)
+    if (todo.id === id) todo.tag = tag
     return todo
   })
 
