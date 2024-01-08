@@ -9,12 +9,12 @@ import { on } from 'events'
 
 interface TagSelectionProps {
   todoId: number
-  onAddTagToTodo: (id: number, tag: string) => void
+  onchangeTagToTodo: (id: number, tag: string) => void
 }
 
 export const TagSelection: FC<TagSelectionProps> = ({
   todoId,
-  onAddTagToTodo,
+  onchangeTagToTodo,
 }) => {
   const [open, setOpen] = useState(false)
   const [tags, setTags] = useState(['筋トレ', '勉強', '読書', '朝のルーティン'])
@@ -41,13 +41,12 @@ export const TagSelection: FC<TagSelectionProps> = ({
         <Box p={3}>
           {' '}
           <Autocomplete
-            multiple
             id="tags-filled"
             options={tags}
             freeSolo
             onChange={(event, value) => {
-              console.log(value[value.length - 1])
-              onAddTagToTodo(todoId, value[value.length - 1])
+              console.log(value)
+              if (value) onchangeTagToTodo(todoId, value)
             }}
             renderTags={(value: readonly string[], getTagProps) =>
               value.map((option: string, index: number) => (

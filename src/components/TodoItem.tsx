@@ -11,27 +11,26 @@ export const TodoItem: FC<{
   todo: Todo
   onDelete: () => void
   onComplete: () => void
-  onAddTagToTodo: (id: number, tag: string) => void
-}> = ({ todo, onComplete, onDelete, onAddTagToTodo }) => {
+  onchangeTagToTodo: (id: number, tag: string) => void
+}> = ({ todo, onComplete, onDelete, onchangeTagToTodo }) => {
   return (
     <div className="flex flex-col bg-white shadow-md rounded px-4 py-2 my-2">
       <div className="flex justify-between items-center">
         <div>
           <p className="text-gray-800 text-lg">{todo.title}</p>
           <div className="flex">
-            {todo.tags.map((tag, index) => (
+            {todo.tag && (
               <Chip
-                key={index}
-                label={tag}
+                label={todo.tag}
                 color="primary"
                 size="small"
                 className="mr-2"
                 variant="outlined"
               />
-            ))}
+            )}
             <TagSelection
               todoId={todo.id}
-              onAddTagToTodo={(id, tag) => onAddTagToTodo(id, tag)}
+              onchangeTagToTodo={(id, tag) => onchangeTagToTodo(id, tag)}
             />
           </div>
         </div>
