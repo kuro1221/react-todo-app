@@ -66,34 +66,36 @@ function App() {
   return (
     <>
       <SearchAppBar />
-      <div className="App p-6">
-        {todos.map((todo, index) => (
-          <TodoItem
-            key={index}
-            todo={todo}
-            onComplete={() => onClickComplete(index)}
-            onDelete={() => onClickDelete(todo.id)}
-          />
-        ))}
-        <div className="flex mt-4">
-          <input
-            type="text"
-            value={text}
-            onChange={onChangeText}
-            className="border-2 border-gray-200 rounded p-2 mr-2 flex-grow"
-          />
-          {inputTextError && (
-            <p className="text-red-500 text-sm">{inputTextError}</p>
-          )}
-          <button
-            onClick={() => onClickAdd(text)}
-            className={`bg-blue-500 hover:bg-blue-700 btn ${
-              inputTextError ? 'opacity-50 cursor-not-allowed' : ''
-            }`}
-            disabled={inputTextError ? true : false}
-          >
-            追加
-          </button>
+      <div className="flex justify-center">
+        <div className="App w-100 mb-8">
+          {todos.map((todo, index) => (
+            <TodoItem
+              key={index}
+              todo={todo}
+              onComplete={() => onClickComplete(index)}
+              onDelete={() => onClickDelete(todo.id)}
+            />
+          ))}
+          <div className="flex mt-4">
+            <input
+              type="text"
+              value={text}
+              onChange={onChangeText}
+              className="border-2 border-gray-200 rounded p-2 mr-2 flex-grow"
+            />
+            {inputTextError && (
+              <p className="text-red-500 text-sm">{inputTextError}</p>
+            )}
+            <button
+              onClick={() => onClickAdd(text)}
+              className={`bg-blue-500 hover:bg-blue-700 btn ${
+                inputTextError ? 'opacity-50 cursor-not-allowed' : ''
+              }`}
+              disabled={inputTextError ? true : false}
+            >
+              追加
+            </button>
+          </div>
         </div>
       </div>
     </>
