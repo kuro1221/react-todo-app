@@ -11,6 +11,16 @@ export const fetchActiveTodos = (): Promise<Todo[]> => {
   return Promise.resolve(todos)
 }
 
+export const fetchCompletedTodos = (): Promise<Todo[]> => {
+  todos = todos.filter((todo) => todo.complete_flg && !todo.delete_flg)
+  return Promise.resolve(todos)
+}
+
+export const fetchDeletedTodos = (): Promise<Todo[]> => {
+  todos = todos.filter((todo) => todo.delete_flg)
+  return Promise.resolve(todos)
+}
+
 export const addTodo = (text: string): Promise<void> => {
   const id = todos.length + 1
   const todo = new Todo(id, text, false, false, '')
