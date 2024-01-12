@@ -6,9 +6,11 @@ import Dialog from '@mui/material/Dialog'
 import Box from '@mui/material/Box'
 import { Chip } from '@mui/material'
 import { on } from 'events'
+import { Todo } from '../models/Todo'
 
 interface TagSelectionProps {
   todoId: number
+  // todo: Todo
   onchangeTagToTodo: (id: number, tag: string) => void
 }
 

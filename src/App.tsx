@@ -123,6 +123,7 @@ function App() {
               variant="filled"
               onChange={onChangeText}
               value={text}
+              style={{ marginRight: '10px' }}
             />
             <Button onClick={() => onClickAdd(text)} variant="outlined">
               追加
