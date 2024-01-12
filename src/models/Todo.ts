@@ -4,6 +4,7 @@ export class Todo {
     public title: string,
     public complete_flg: boolean,
     public delete_flg: boolean,
-    public tag: string
+    public tag: string,
+    public limit_date: Date | null
   ) {}
 }
